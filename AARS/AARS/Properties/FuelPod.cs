@@ -91,8 +91,9 @@ public class DroguePod : PartModule
                 rope.material.mainTexture = GameDatabase.Instance.GetTexture("AARS/Textures/OilWire", false);
                 rope.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 rope.receiveShadows = false;
-                rope.SetWidth(0.2f, 0.2f);
-                rope.SetVertexCount(2);
+                //rope.SetWidth(0.2f, 0.2f);
+                //rope.SetVertexCount(2);
+                rope.widthCurve = AnimationCurve.Linear(0, 0.2f, 1, 0.2f);//remove obsolete method
                 rope.SetPosition(0, DrogueOriginTransform.position + this.part.rb.velocity * Time.fixedDeltaTime);
                 rope.SetPosition(1, DrogueTransform.position + this.part.rb.velocity * Time.fixedDeltaTime);
                 rope.useWorldSpace = true;
@@ -125,8 +126,9 @@ public class DroguePod : PartModule
                 rope.material.mainTexture = GameDatabase.Instance.GetTexture("AARS/Textures/wire", false);
                 rope.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 rope.receiveShadows = false;
-                rope.SetWidth(0.2f, 0.2f);
-                rope.SetVertexCount(2);
+                //rope.SetWidth(0.2f, 0.2f);
+                //rope.SetVertexCount(2);
+                rope.widthCurve = AnimationCurve.Linear(0, 0.2f, 1, 0.2f);//remove obsolete method
                 rope.SetPosition(0, DrogueOriginTransform.position + this.part.rb.velocity * Time.fixedDeltaTime);
                 rope.SetPosition(1, DrogueTransform.position + this.part.rb.velocity * Time.fixedDeltaTime);
                 rope.useWorldSpace = true;

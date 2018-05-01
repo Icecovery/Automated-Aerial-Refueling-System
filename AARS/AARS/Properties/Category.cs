@@ -1,4 +1,5 @@
-﻿using KSP.UI.Screens;
+﻿/*
+using KSP.UI.Screens;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,3 +29,4 @@ using UnityEngine;
                 PartCategorizer.AddCustomSubcategoryFilter(filter, customCategoryName, customDisplayCategoryName, icon, p => availableParts.Contains(p));
         }
     }
+    */
