@@ -131,12 +131,14 @@ public class FuelProbe : PartModule
                     }
                     if (ReP.magnitude > 0.5f)
                     { 
-                        Deactivate(); 
+                        Deactivate();
+                        Debug.Log("Impact Disconnect");
                     }
-                    float FuelFinal = this.part.RequestResource(fuelType, -Drogue.FuelGain);
+                    double FuelFinal = this.part.RequestResource(fuelType, -Drogue.FuelGain);
                     if (Drogue.FuelGain != 0 && -FuelFinal < Drogue.FuelGain)
                     {
                         Deactivate();
+                        Debug.Log("Finish Refuel");
                     }
                 }
             }
