@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class FuelDrogue : PartModule
@@ -78,8 +79,14 @@ public class FuelDrogue : PartModule
             {
                 double consumption = Probe.DrainSpeed * TimeWarp.fixedDeltaTime;
                 FuelGain = this.part.RequestResource(Probe.fuelType, consumption);
-                if (consumption > FuelGain)
+                if (Math.Round(consumption,4) > Math.Round(FuelGain,4))
+                {
+                    Probe.part.RequestResource(Probe.fuelType, -FuelGain);
+                    Debug.Log("Finish Drain" + consumption + "Finish Deliver" + FuelGain);
                     Probe.Deactivate();
+                    Debug.Log("Finish Deliver");
+                }
+
             }
         }
 
