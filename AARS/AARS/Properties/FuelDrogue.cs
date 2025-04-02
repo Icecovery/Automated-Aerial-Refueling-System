@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class FuelDrogue : PartModule
 {
     [KSPField]
-    public float FuelGain = 0f;
+    public double FuelGain = 0f;
     private Transform TirggerTransform = null;
     public bool IsDeployed = false;
     public bool IsContact = false;
@@ -76,10 +77,16 @@ public class FuelDrogue : PartModule
 
             if (IsContact && IsDeployed)
             {
-                float consumption = Probe.DrainSpeed * TimeWarp.fixedDeltaTime;
+                double consumption = Probe.DrainSpeed * TimeWarp.fixedDeltaTime;
                 FuelGain = this.part.RequestResource(Probe.fuelType, consumption);
-                if (consumption > FuelGain)
+                if (Math.Round(consumption,4) > Math.Round(FuelGain,4))
+                {
+                    Probe.part.RequestResource(Probe.fuelType, -FuelGain);
+                    Debug.Log("Finish Drain" + consumption + "Finish Deliver" + FuelGain);
                     Probe.Deactivate();
+                    Debug.Log("Finish Deliver");
+                }
+
             }
         }
 

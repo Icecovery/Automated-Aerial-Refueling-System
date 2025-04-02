@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using KSP.Localization;
 
 
@@ -72,10 +73,15 @@ public class FuelProbe : PartModule
 
     public override void OnStart(PartModule.StartState state)
     {
-        base.OnStart(state);
-        this.enabled = true;
-        this.part.force_activate();
-        ProbeTransform = base.part.FindModelTransform("ProbeTransform");
+        if (state != StartState.Editor && state != StartState.None)
+        {
+            this.enabled = true;
+            this.part.force_activate();
+        }
+        if (part.FindModelTransform("ProbeTransform"))
+        {
+            ProbeTransform = part.FindModelTransform("ProbeTransform");
+        }
         // Localization
         Actions["Toggle"].guiName = Localizer.Format("#AARS_ToggleProbe");
         Events["Activate"].guiName = Localizer.Format("#AARS_Activate");
@@ -130,13 +136,19 @@ public class FuelProbe : PartModule
                         }
                     }
                     if (ReP.magnitude > 0.5f)
-                    { 
-                        Deactivate(); 
-                    }
-                    float FuelFinal = this.part.RequestResource(fuelType, -Drogue.FuelGain);
-                    if (Drogue.FuelGain != 0 && -FuelFinal < Drogue.FuelGain)
                     {
                         Deactivate();
+                        Debug.Log(this.vessel.name + "Impact Disconnect");
+                    }
+                    else
+                    {
+                        double FuelFinal = this.part.RequestResource(fuelType, -Drogue.FuelGain);
+                        if (Math.Round(Drogue.FuelGain,4) != 0 && Math.Round(-FuelFinal,4) < Math.Round(Drogue.FuelGain, 4))
+                        {
+                            Debug.Log("Finish Drain"  + FuelFinal + "Finish Deliver" + Drogue.FuelGain);
+                            Deactivate();
+                            Debug.Log(this.vessel.name + "Finish Refuel");
+                        }
                     }
                 }
             }
